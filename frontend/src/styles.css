@@ -1,0 +1,141 @@
+
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 16px;
+    background: linear-gradient(45deg,#F21A2B,#E787F2);
+}
+
+header {
+    position: fixed;
+    background-color: #FFF;
+    right: 0px;
+    left: 0px;
+    z-index: 900;
+}
+
+.wrapper,
+.header {
+    display: grid;
+    grid-template-columns: 240px auto;
+    align-items: center;
+}
+
+.aside {
+    background: linear-gradient(195deg,#42424a,#191919);
+    height: 100vh;
+    overflow: auto;
+    padding-top: 60px;
+}
+
+.main {
+    height: 100vh;
+    overflow: auto;
+    padding-top: 60px;
+}
+
+.main-header menu {
+    text-align: right;
+}
+
+
+ul {
+    margin-bottom: 0px;
+    padding-left: 0px;;
+}
+
+
+.aside-header {
+    background-color: #42424a;
+    color:#FFF;
+    padding: 8px 0px;
+    font-family: roboto;
+}
+
+.aside-header span {
+    font-size: 19px;
+}
+
+
+.aside nav ul li a{
+    margin-bottom: 10px;
+    padding: 10px 10px;
+    border-radius: 4px;
+    color: #FFF;
+    display: block;
+    text-decoration: none;
+    opacity: .6;
+}
+
+
+.aside nav ul li a.active,
+.aside nav ul li a.active:hover{
+    background: linear-gradient(195deg,#ec407a,#d81b60);
+    opacity: 1;
+}
+
+
+.aside nav ul li a:hover{
+    transition: .35 ease-in;
+    background: rgba(255, 255, 255, 0.253);
+    opacity: 1;
+}
+
+.aside nav ul li a span {
+    width: 17px;
+    display: inline-block;
+}
+
+.pagination{
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+
+.page-item .page-link{
+	font-size: 13px !important;
+}
+
+
+.main-header-menu {
+    display: grid;
+    grid-template-columns: 300px auto;
+    align-items: center;
+}
+
+
+.top-menu ul li {
+    display: inline-block;
+    padding-left: 20px;
+    color: rgba(0, 0, 0, 0.644);
+    font-size: 13px;
+}
+
+.top-menu ul li a {
+    text-decoration: none;
+    color:inherit;
+}
+
+.bread a {
+    text-decoration: none;
+    font: 13px;
+}
+
+
+
+.table-blue tr,
+.table-blue tr td {
+    background-color: #F1EAF2;
+    color: #FFF;
+}
+
+
+.table-blue thead tr,
+.table-blue tfoot tr {
+    background: #F1EAF2;
+    border-bottom: 0px solid #F1EAF2;
+    color: black;
+}

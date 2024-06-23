@@ -1,0 +1,27 @@
+<div class="container">
+  <h2>Analyse your URL</h2>
+  <div class="input-group">
+    <input [(ngModel)]="url" placeholder="Enter URL   ex: http://example.com" class="form-control"/>
+    <button (click)="fetchLinks()" class="btn btn-primary" [disabled]="!url.trim()">Get Links</button>
+  </div>
+  <div *ngIf="errorMessage">{{ errorMessage }}</div>
+  <div class="table-container">
+    <table *ngIf="paginatedLinks.length && !errorMessage" class="table">
+      <thead>
+        <tr>
+          <th>URLs</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let link of paginatedLinks">
+          <td><a [href]="sanitizer.bypassSecurityTrustUrl(link)" target="_blank">{{ link }}</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="totalPages > 1" class="pagination">
+      <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 0">Previous</button>
+      <span>Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+      <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages - 1">Next</button>
+    </div>
+  </div>
+</div>
