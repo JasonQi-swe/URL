@@ -7,11 +7,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
+
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import org.hibernate.annotations.Index;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,13 +29,13 @@ public class Page {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 2048)
+    @Column(nullable = false, unique = true, length = 767)
     private String url;
     private String title;
     private LocalDateTime lastRequestedTime;
 
     @ElementCollection
     @CollectionTable(name = "page_links", joinColumns = @JoinColumn(name = "page_id"))
-    @Column(name = "links", length = 2048)
+    @Column(name = "links", length = 767)
     private List<String> links;
 }
