@@ -6,8 +6,4 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface PageRepository extends JpaRepository<Page, Long> {
     Page findByUrl(String url);
-
-
-   // @Query("SELECT p FROM Page p LEFT JOIN FETCH p.links WHERE p.url = :url")
-   // Page findByUrlWithLinks(String url);
 }

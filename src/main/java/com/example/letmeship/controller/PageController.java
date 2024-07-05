@@ -4,6 +4,7 @@ import com.example.letmeship.entity.History;
 import com.example.letmeship.entity.Page;
 import com.example.letmeship.entity.UrlRequest;
 import com.example.letmeship.service.PageService;
+import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
