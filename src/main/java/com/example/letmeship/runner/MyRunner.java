@@ -1,7 +1,6 @@
 package com.example.letmeship.runner;
 
-
-import com.example.letmeship.entity.User;
+import com.example.letmeship.repository.RoleRepository;
 import com.example.letmeship.repository.UserRepository;
 import com.example.letmeship.service.RoleService;
 import com.example.letmeship.service.UserService;
@@ -20,12 +19,19 @@ public class MyRunner implements CommandLineRunner {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public void run(String... args) throws Exception {
-//        createRoles();
-//        createAdmin();
-//        createOtherUsers();
+        if (isDatabaseEmpty()) {
+            createRoles();
+            createAdmin();
+            createOtherUsers();
+        }
     }
 
     private void createRoles() {
@@ -45,8 +51,7 @@ public class MyRunner implements CommandLineRunner {
         }
     }
 
-
-
-
-
+    private boolean isDatabaseEmpty() {
+        return userRepository.count() == 0 && roleRepository.count() == 0;
+    }
 }
