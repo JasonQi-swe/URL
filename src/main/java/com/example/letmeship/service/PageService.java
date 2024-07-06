@@ -36,35 +36,6 @@ public class PageService {
 
     private static final Logger logger = LoggerFactory.getLogger(PageService.class);
 
-    public Page savePage(Page page) {
-        //logger.info(page.getId().toString());
-        return pageRepository.save(page);
-    }
-
-    public Page findPageByUrl(String url) {
-        return pageRepository.findByUrl(url);
-    }
-
-    public List<String> extractLinksFromUrl(Page page, String url) {
-        logger.info("entered: " + url);
-        List<String> linkList = new ArrayList<>();
-        try {
-            Document document = Jsoup.connect(url).get();
-            Elements links = document.select("a[href]");
-            for (Element linkElement : links) {
-                logger.debug("links: " + linkElement.attr("abs:href"));
-                linkList.add(linkElement.attr("abs:href"));
-            }
-        }catch (SocketTimeoutException e) {
-            throw new TimeoutException("Request to URL timed out: " + url);
-        }catch (IOException e) {
-            throw new PageCannotBeReachedException("Page cannot be reached, URL: " + url);
-        }
-
-
-        return linkList;
-    }
-
     public Page savePageWithLinks(String url) throws IOException {
         validateUrl(url);
         Page page = findPageByUrl(url);
@@ -84,6 +55,34 @@ public class PageService {
         saveHistory(url);
 
         return page;
+    }
+
+    public Page savePage(Page page) {
+        return pageRepository.save(page);
+    }
+
+    public Page findPageByUrl(String url) {
+        return pageRepository.findByUrl(url);
+    }
+
+    private List<String> extractLinksFromUrl(Page page, String url) {
+        logger.info("entered: " + url);
+        List<String> linkList = new ArrayList<>();
+        try {
+            Document document = Jsoup.connect(url).get();
+            Elements links = document.select("a[href]");
+            for (Element linkElement : links) {
+                logger.debug("links: " + linkElement.attr("abs:href"));
+                linkList.add(linkElement.attr("abs:href"));
+            }
+            String title = document.title();
+            page.setTitle(title);
+        }catch (SocketTimeoutException e) {
+            throw new TimeoutException("Request to URL timed out: " + url);
+        }catch (IOException e) {
+            throw new PageCannotBeReachedException("Page cannot be reached, URL: " + url);
+        }
+        return linkList;
     }
 
     private void validateUrl(String url) {

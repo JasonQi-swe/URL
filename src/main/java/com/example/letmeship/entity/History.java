@@ -17,7 +17,7 @@ public class History {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 767)
+    @Column(length = 2048)
     private String requestedUrl;
     private LocalDateTime requestedTime;
 }

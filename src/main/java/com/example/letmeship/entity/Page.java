@@ -29,13 +29,15 @@ public class Page {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 767)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String url;
+
+    @Column(nullable = false, unique = true)
     private String title;
     private LocalDateTime lastRequestedTime;
 
     @ElementCollection
     @CollectionTable(name = "page_links", joinColumns = @JoinColumn(name = "page_id"))
-    @Column(name = "links", length = 767)
+    @Column(name = "links", length = 2048)
     private List<String> links;
 }
