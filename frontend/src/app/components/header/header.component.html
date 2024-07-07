@@ -11,6 +11,7 @@
           <div class="bread">
             <span class="text-muted text">Webpage Analyser</span>
           </div>
+          <button *ngIf="isAuthenticated" (click)="logout()">Logout</button>
         </div>
       </div>
     </div>
