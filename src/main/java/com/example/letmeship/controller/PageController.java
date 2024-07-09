@@ -4,6 +4,7 @@ import com.example.letmeship.entity.History;
 import com.example.letmeship.entity.Page;
 import com.example.letmeship.entity.UrlRequest;
 import com.example.letmeship.service.PageService;
+import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -26,7 +28,9 @@ public class PageController {
 
     private static final Logger logger = LoggerFactory.getLogger(PageController.class);
 
+
     @PostMapping("/analyse")
+    @PreAuthorize("hasAnyAuthority('Admin','User')")
     public ResponseEntity<Page> getLinksFromUrl(@Valid @RequestBody UrlRequest urlRequest) throws IOException {
         logger.info("Entered: " + urlRequest.getUrl());
         Page page = pageService.savePageWithLinks(urlRequest.getUrl());
@@ -34,6 +38,7 @@ public class PageController {
     }
 
     @GetMapping("/history")
+    @PreAuthorize("hasAnyAuthority('Admin','User')")
     public ResponseEntity<org.springframework.data.domain.Page<History>> getHistory(@RequestParam int page, @RequestParam int size) {
         logger.info("Fetching history");
         Pageable pageable = PageRequest.of(page, size);

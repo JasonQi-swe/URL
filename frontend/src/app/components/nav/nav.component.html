@@ -2,10 +2,9 @@
     <div>
       <nav>
         <ul>
-          <li><a routerLink="/analyse" routerLinkActive="active"><span></span>
-            Analyse</a></li>
-          <li><a routerLink="/history" routerLinkActive="active"><span></span> Hisotry</a>
-          </li>
+          <li *ngIf="isAuthenticated"><a routerLink="/analyse" routerLinkActive="active"><span></span> Analyse</a></li>
+          <li *ngIf="isAuthenticated"><a routerLink="/history" routerLinkActive="active"><span></span> History</a></li>
+          <li *ngIf="!isAuthenticated"><a routerLink="/" routerLinkActive="active"><span></span> Login</a></li>
         </ul>
       </nav>
     </div>
