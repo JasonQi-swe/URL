@@ -16,6 +16,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import com.example.letmeship.entity.Role;
 import jakarta.servlet.http.HttpServletResponse;
@@ -41,14 +43,17 @@ public class AuthController {
 
     @PostMapping("/login")
     public void login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) throws IOException {
-        log.info("logging in");
+        log.info("logging in {}", loginRequest.getEmail());
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
             );
-            User user = (User) authentication.getPrincipal();
-            String jwtAccessToken = jwtHelper.generateAccessToken(user.getEmail(), user.getRoles().stream().map(Role::getName).collect(Collectors.toList()));
-            String jwtRefreshToken = jwtHelper.generateRefreshToken(user.getEmail());
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+            String jwtAccessToken = jwtHelper.generateAccessToken(userDetails.getUsername(),
+                    userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
+            String jwtRefreshToken = jwtHelper.generateRefreshToken(userDetails.getUsername());
+
             response.setContentType("application/json");
             new ObjectMapper().writeValue(response.getOutputStream(), jwtHelper.getTokensMap(jwtAccessToken, jwtRefreshToken));
         } catch (Exception e) {
@@ -64,7 +69,7 @@ public class AuthController {
         return userService.loadUserByEmail(email) != null;
     }
 
-    @GetMapping("/refresh-token")
+    @PostMapping("/refresh-token")
     public void generateNewAccessToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String jwtRefreshToken = jwtHelper.extractTokenFromHeaderIfExists(request.getHeader(AUTH_HEADER));
         if (jwtRefreshToken != null) {

@@ -36,6 +36,12 @@ export class AuthService {
     });
   }
 
+  refreshToken(refreshToken: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/refresh-token`, {}, {
+      headers: { 'Authorization': `Bearer ${refreshToken}` }
+    });
+  }
+
   logout(): void {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');

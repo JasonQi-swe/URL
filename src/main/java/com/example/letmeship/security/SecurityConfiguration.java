@@ -41,7 +41,7 @@ public class SecurityConfiguration {
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.authorizeRequests()
-                .requestMatchers("/refresh-token/**", "/api/login").permitAll()
+                .requestMatchers("/api/refresh-token", "/api/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), jwtHelper))
