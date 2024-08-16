@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api'; 
+  private authUrl = 'http://localhost:8080/auth'; 
   private authState = new BehaviorSubject<boolean>(this.hasToken());
 
   constructor(private http: HttpClient) {}
@@ -21,7 +21,7 @@ export class AuthService {
 
   login(loginRequest: any): Observable<any> {
     return new Observable(observer => {
-      this.http.post(`${this.apiUrl}/login`, loginRequest).subscribe(
+      this.http.post(`${this.authUrl}/login`, loginRequest).subscribe(
         (response: any) => {
           localStorage.setItem('accessToken', response.accessToken);
           localStorage.setItem('refreshToken', response.refreshToken);
@@ -37,7 +37,7 @@ export class AuthService {
   }
 
   refreshToken(refreshToken: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/refresh-token`, {}, {
+    return this.http.post<any>(`${this.authUrl}/refresh-token`, {}, {
       headers: { 'Authorization': `Bearer ${refreshToken}` }
     });
   }
