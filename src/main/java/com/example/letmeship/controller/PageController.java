@@ -38,7 +38,7 @@ public class PageController {
     }
 
     @GetMapping("/history")
-    @PreAuthorize("hasAnyAuthority('Admin','User')")
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<org.springframework.data.domain.Page<History>> getHistory(@RequestParam int page, @RequestParam int size) {
         logger.info("Fetching history");
         Pageable pageable = PageRequest.of(page, size);

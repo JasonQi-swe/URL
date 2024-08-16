@@ -28,7 +28,7 @@ import static com.example.letmeship.constant.JWTUtil.AUTH_HEADER;
 import static com.example.letmeship.constant.JWTUtil.SECRET;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/auth")
 @Slf4j
 public class AuthController {
 

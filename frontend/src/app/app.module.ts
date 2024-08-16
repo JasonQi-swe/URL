@@ -5,7 +5,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { NavComponent } from './components/nav/nav.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AnalyseComponent } from './components/analyse/analyse.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HistoryComponent } from './components/history/history.component';
 import { AuthenticationComponent } from './components/authentication/authentication.component';
@@ -41,6 +41,7 @@ const appRoutes: Routes = [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     FormsModule,
+    ReactiveFormsModule, 
     HttpClientModule,
     BrowserAnimationsModule,
     MatSnackBarModule,

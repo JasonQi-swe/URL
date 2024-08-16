@@ -2,16 +2,22 @@
   <mat-card>
     <mat-card-title>Login</mat-card-title>
     <mat-card-content>
-      <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+      <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="fill">
           <mat-label>Email</mat-label>
-          <input matInput type="email" id="email" required [(ngModel)]="loginRequest.email" name="email">
+          <input matInput type="email" formControlName="email">
+          <mat-error *ngIf="loginFormGroup.get('email')?.invalid && loginFormGroup.get('email')?.touched">
+            Please enter a valid email address
+          </mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Password</mat-label>
-          <input matInput type="password" id="password" required [(ngModel)]="loginRequest.password" name="password">
+          <input matInput type="password" formControlName="password">
+          <mat-error *ngIf="loginFormGroup.get('password')?.invalid && loginFormGroup.get('password')?.touched">
+            Password is required
+          </mat-error>
         </mat-form-field>
-        <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.form.valid">Login</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="loginFormGroup.invalid">Login</button>
       </form>
     </mat-card-content>
   </mat-card>
